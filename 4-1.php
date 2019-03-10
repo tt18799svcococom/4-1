@@ -1,6 +1,5 @@
 <?php
-//土井先生のコードを参考にしました。
-//変数この変数はなぜ必要なのか。
+
 $edit_val ="";
 $name_val ="";
 $comment_val ="";
@@ -8,7 +7,7 @@ $pass_val ="";
 $name = $_POST["name"];
 $comment = $_POST["comment"];
 
-//データベースへの接続(3-1)tryとはなにか、25,26？？
+//データベースへの接続(3-1)
 try {
     $dsn = 'mysql:dbname=tt_187_99sv_coco_com;host=localhost';
     $user = 'tt-***.**sv-coco';
@@ -20,11 +19,11 @@ try {
             PDO::ATTR_EMULATE_PREPARES => false,//静的プレースホルダー
         )
     );
-    //テーブル削除 なぜ//使うのか
+    //テーブル削除 
     //$sql = "DROP TABLE IF EXISTS table";
     //$pdo -> exec($sql);
     
-    //テーブル作成 35行目'？ not exists, not null??(32)?
+    //テーブル作成 
     $DB_table_name = "table1";
     $create_query = '
     CREATE TABLE IF NOT EXISTS '.$DB_table_name.'(
@@ -37,7 +36,7 @@ try {
     $create_table = $pdo -> prepare($create_query);
     $create_table -> execute();
     
-    //作成できたか確認 なぜ/*
+    //作成できたか確認 
     /*
      $is_table = $pdo -> query('SHOW TABLES');
     foreach($is_table as $rows){
@@ -51,10 +50,10 @@ try {
     }
     echo"<hr>";
     */
-    //現在時刻取得 これの必要性？
+    //現在時刻取得 
     $date = date(Y."-".m."-".d."-".H."-".i."-".s);
     
-    //削除パス判定　削除判定パスとは？FETCH＿NUM？
+    //削除パス判定　
     if(!empty($_POST["delete_pass"]) && !empty($_POST["delete_num"]) && ctype_digit($_POST["delete_num"])){
         //削除行の情報取得
         $delete_pass = $_POST["delete_pass"];
@@ -63,7 +62,7 @@ try {
         $select_result = $pdo->query($select_sql);
         $sel_result = $select_result->fetch(PDO::FETCH_NUM);
         
-        //パスが一致してたら削除実行$sql_result[4]？
+        //パスが一致してたら削除実行
         if($sel_result[4] == $delete_pass){
             $delete_sql = "delete from table1 where id=$delete_num";
             $delete_result = $pdo->query($delete_sql);
